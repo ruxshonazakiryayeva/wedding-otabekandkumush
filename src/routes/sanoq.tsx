@@ -55,7 +55,7 @@ function SanoqPage() {
 
   return (
     <PageFrame backgroundImage={heroNight} nextTo="/galereya">
-      <div className="flex-1 animate-rise text-center">
+      <div className="flex flex-1 flex-col justify-center animate-rise text-center">
         <h1 className="font-display text-2xl tracking-[0.15em] text-gold">
           {t("countdownTitle")}
         </h1>

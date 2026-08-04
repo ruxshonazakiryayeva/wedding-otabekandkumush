@@ -48,7 +48,7 @@ function MarosimPage() {
 
   return (
     <PageFrame nextTo="/sanoq">
-      <div className="flex-1 animate-rise">
+      <div className="flex flex-1 flex-col justify-center animate-rise">
         <div className="paper-card rounded-[2rem] px-5 py-7">
           <Crest className="mx-auto text-gold-deep" />
           <h1 className="mt-2 text-center font-display text-2xl tracking-[0.15em] text-ink">

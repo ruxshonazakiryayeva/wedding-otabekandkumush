@@ -42,7 +42,7 @@ function TasdiqlashPage() {
 
   return (
     <PageFrame nextTo="/xayr">
-      <div className="flex-1 animate-rise">
+      <div className="flex flex-1 flex-col justify-center animate-rise">
         <div className="paper-card rounded-[2rem] px-5 py-7">
           <h1 className="text-center font-display text-2xl leading-tight tracking-[0.15em] text-ink">
             {t("rsvpTitle")}

@@ -28,7 +28,7 @@ function XayrPage() {
   return (
     <PageFrame backgroundImage={finale} overlay="soft">
       <div className="flex flex-1 flex-col items-center justify-end text-center animate-rise">
-        <h1 className="font-display text-4xl italic leading-tight text-gold-gradient">
+        <h1 className="px-2 font-display text-[2rem] italic leading-tight text-gold-gradient">
           {t("finalTitle")}
           <Heart className="ml-2 inline h-5 w-5 fill-rose text-rose" />
         </h1>

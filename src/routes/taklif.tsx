@@ -28,7 +28,7 @@ function TaklifPage() {
 
   return (
     <PageFrame nextTo="/hikoya">
-      <div className="relative flex-1 animate-rise">
+      <div className="relative flex flex-1 flex-col justify-center animate-rise">
         <Corner className="absolute -left-2 -top-2" />
         <Corner className="absolute -right-2 -top-2 -scale-x-100" />
 

@@ -48,7 +48,7 @@ function GalereyaPage() {
 
   return (
     <PageFrame nextTo="/tasdiqlash">
-      <div className="flex-1 animate-rise">
+      <div className="flex flex-1 flex-col justify-center animate-rise">
         <h1 className="text-center font-display text-2xl tracking-[0.2em] text-gold">
           {t("galleryTitle")}
         </h1>

@@ -28,7 +28,7 @@ function HikoyaPage() {
 
   return (
     <PageFrame nextTo="/marosim">
-      <div className="flex-1 animate-rise text-center">
+      <div className="flex flex-1 flex-col justify-center animate-rise text-center">
         <h1 className="font-display text-3xl italic text-gold">{t("storyTitle")}</h1>
         <Divider className="mt-3" />
 
