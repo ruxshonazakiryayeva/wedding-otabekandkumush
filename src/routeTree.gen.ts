@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GalereyaRouteImport } from './routes/galereya'
+import { Route as HikoyaRouteImport } from './routes/hikoya'
+import { Route as MarosimRouteImport } from './routes/marosim'
+import { Route as SanoqRouteImport } from './routes/sanoq'
+import { Route as TaklifRouteImport } from './routes/taklif'
+import { Route as TasdiqlashRouteImport } from './routes/tasdiqlash'
+import { Route as XayrRouteImport } from './routes/xayr'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalereyaRoute = GalereyaRouteImport.update({
+  id: '/galereya',
+  path: '/galereya',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HikoyaRoute = HikoyaRouteImport.update({
+  id: '/hikoya',
+  path: '/hikoya',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarosimRoute = MarosimRouteImport.update({
+  id: '/marosim',
+  path: '/marosim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SanoqRoute = SanoqRouteImport.update({
+  id: '/sanoq',
+  path: '/sanoq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TaklifRoute = TaklifRouteImport.update({
+  id: '/taklif',
+  path: '/taklif',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasdiqlashRoute = TasdiqlashRouteImport.update({
+  id: '/tasdiqlash',
+  path: '/tasdiqlash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const XayrRoute = XayrRouteImport.update({
+  id: '/xayr',
+  path: '/xayr',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/galereya': typeof GalereyaRoute
+  '/hikoya': typeof HikoyaRoute
+  '/marosim': typeof MarosimRoute
+  '/sanoq': typeof SanoqRoute
+  '/taklif': typeof TaklifRoute
+  '/tasdiqlash': typeof TasdiqlashRoute
+  '/xayr': typeof XayrRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/galereya': typeof GalereyaRoute
+  '/hikoya': typeof HikoyaRoute
+  '/marosim': typeof MarosimRoute
+  '/sanoq': typeof SanoqRoute
+  '/taklif': typeof TaklifRoute
+  '/tasdiqlash': typeof TasdiqlashRoute
+  '/xayr': typeof XayrRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/galereya': typeof GalereyaRoute
+  '/hikoya': typeof HikoyaRoute
+  '/marosim': typeof MarosimRoute
+  '/sanoq': typeof SanoqRoute
+  '/taklif': typeof TaklifRoute
+  '/tasdiqlash': typeof TasdiqlashRoute
+  '/xayr': typeof XayrRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/galereya'
+    | '/hikoya'
+    | '/marosim'
+    | '/sanoq'
+    | '/taklif'
+    | '/tasdiqlash'
+    | '/xayr'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/galereya'
+    | '/hikoya'
+    | '/marosim'
+    | '/sanoq'
+    | '/taklif'
+    | '/tasdiqlash'
+    | '/xayr'
+  id:
+    | '__root__'
+    | '/'
+    | '/galereya'
+    | '/hikoya'
+    | '/marosim'
+    | '/sanoq'
+    | '/taklif'
+    | '/tasdiqlash'
+    | '/xayr'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GalereyaRoute: typeof GalereyaRoute
+  HikoyaRoute: typeof HikoyaRoute
+  MarosimRoute: typeof MarosimRoute
+  SanoqRoute: typeof SanoqRoute
+  TaklifRoute: typeof TaklifRoute
+  TasdiqlashRoute: typeof TasdiqlashRoute
+  XayrRoute: typeof XayrRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +143,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/galereya': {
+      id: '/galereya'
+      path: '/galereya'
+      fullPath: '/galereya'
+      preLoaderRoute: typeof GalereyaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hikoya': {
+      id: '/hikoya'
+      path: '/hikoya'
+      fullPath: '/hikoya'
+      preLoaderRoute: typeof HikoyaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marosim': {
+      id: '/marosim'
+      path: '/marosim'
+      fullPath: '/marosim'
+      preLoaderRoute: typeof MarosimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sanoq': {
+      id: '/sanoq'
+      path: '/sanoq'
+      fullPath: '/sanoq'
+      preLoaderRoute: typeof SanoqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/taklif': {
+      id: '/taklif'
+      path: '/taklif'
+      fullPath: '/taklif'
+      preLoaderRoute: typeof TaklifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasdiqlash': {
+      id: '/tasdiqlash'
+      path: '/tasdiqlash'
+      fullPath: '/tasdiqlash'
+      preLoaderRoute: typeof TasdiqlashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/xayr': {
+      id: '/xayr'
+      path: '/xayr'
+      fullPath: '/xayr'
+      preLoaderRoute: typeof XayrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GalereyaRoute: GalereyaRoute,
+  HikoyaRoute: HikoyaRoute,
+  MarosimRoute: MarosimRoute,
+  SanoqRoute: SanoqRoute,
+  TaklifRoute: TaklifRoute,
+  TasdiqlashRoute: TasdiqlashRoute,
+  XayrRoute: XayrRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
