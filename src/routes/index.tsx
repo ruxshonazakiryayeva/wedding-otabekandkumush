@@ -15,12 +15,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Otabek va Kumushning nikoh to'yi taklifnomasi. 27.07.2027, Navro'z Saroyi, Samarqand.",
+          "Otabek va Kumushning nikoh to'yi taklifnomasi. 27.07.2027, Marg'ilon restorani, Farg'ona.",
       },
       { property: "og:title", content: "Otabek & Kumush · To'y taklifnomasi" },
       {
         property: "og:description",
-        content: "Yulduzlar to'la osmon ostida — 27.07.2027, Navro'z Saroyi, Samarqand.",
+        content: "Yulduzlar to'la osmon ostida — 27.07.2027, Marg'ilon restorani, Farg'ona.",
       },
     ],
   }),
