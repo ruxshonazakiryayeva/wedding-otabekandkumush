@@ -64,21 +64,26 @@ function TopBar() {
               </button>
             ))}
           </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <AdminPanel />
-            <a
-              href="https://webinvite-six.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="WebInvite"
-              className="flex h-6 w-9 items-center justify-center rounded-full border border-gold/40 text-[10px] font-semibold tracking-widest text-gold transition-colors hover:bg-gold hover:text-night"
-            >
-              WI
-            </a>
-          </div>
         </div>
       </div>
     </header>
+  );
+}
+
+function BottomLinks() {
+  return (
+    <footer className="relative z-10 flex flex-col items-center gap-3 px-6 py-10 text-center">
+      <AdminPanel />
+      <a
+        href="https://webinvite-six.vercel.app/"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="WebInvite"
+        className="flex h-10 items-center justify-center rounded-full border border-gold bg-gold px-6 text-sm font-semibold tracking-[0.25em] text-night transition-transform hover:-translate-y-0.5"
+      >
+        WI
+      </a>
+    </footer>
   );
 }
 
@@ -122,7 +127,7 @@ function Invite() {
         <p className="text-xs tracking-[0.3em] text-ink-soft">{t("guest")}</p>
         <Divider className="my-5" />
         <p className="font-display text-2xl leading-relaxed text-ink">
-          {t("inviteA")} <span className="text-gold-deep">{t("inviteB")}</span> {t("inviteC")}
+          {t("inviteA")} <span className="whitespace-nowrap text-gold-deep">{t("inviteB")}</span> {t("inviteC")}
         </p>
         <div className="mt-6 flex items-center justify-center gap-4 font-display text-3xl text-ink">
           <span>{t("groom")}</span>
@@ -400,6 +405,7 @@ function Content() {
       <Gallery />
       <Rsvp />
       <Finale />
+      <BottomLinks />
     </main>
   );
 }
