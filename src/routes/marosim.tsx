@@ -11,12 +11,12 @@ export const Route = createFileRoute("/marosim")({
       { title: "To'y marosimi · 27.07.2027 Navro'z Saroyi" },
       {
         name: "description",
-        content: "To'y marosimi: 27.07.2027, seshanba, 18:00, Navro'z Saroyi, Samarqand shahri.",
+        content: "To'y marosimi: 27.07.2027, seshanba, 18:00, Marg’ilon Restorani (To’yxona), Farg'ona shahri.",
       },
       { property: "og:title", content: "To'y marosimi · Otabek & Kumush" },
       {
         property: "og:description",
-        content: "27.07.2027, 18:00 — Navro'z Saroyi, Samarqand.",
+        content: "27.07.2027, 18:00 — Marg’ilon Restorani (To’yxona), Farg'ona shahri.",
       },
     ],
   }),
@@ -69,7 +69,7 @@ function MarosimPage() {
             </Row>
             <Row icon={<Map className="h-5 w-5" />} label={t("map")}>
               <a
-                href="https://maps.google.com/?q=Navro'z+Saroyi+Samarqand"
+                href="https://yandex.uz/maps/-/CTC~iM8H"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-1 inline-flex rounded-full bg-night px-4 py-2 text-xs tracking-wide text-gold transition-colors hover:bg-night-deep"
