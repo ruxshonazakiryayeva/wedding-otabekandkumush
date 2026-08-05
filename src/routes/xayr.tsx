@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Instagram, Pause, Phone, Play, Send, SkipBack, SkipForward } from "lucide-react";
-import { useState } from "react";
 
 import { PageFrame } from "@/components/wedding/PageFrame";
 import { useLang } from "@/lib/i18n";
+import { useMusic } from "@/lib/music";
 import finale from "@/assets/finale.jpg";
 
 export const Route = createFileRoute("/xayr")({
@@ -23,26 +23,28 @@ export const Route = createFileRoute("/xayr")({
 
 function XayrPage() {
   const { t } = useLang();
-  const [playing, setPlaying] = useState(true);
+  const { playing, toggle } = useMusic();
 
   return (
     <PageFrame backgroundImage={finale} overlay="soft">
       <div className="flex flex-1 flex-col items-center justify-end text-center animate-rise">
-        <h1 className="px-2 font-display text-[2rem] italic leading-tight text-gold-gradient">
+        <h1 className="px-2 font-display text-[2rem] italic leading-tight text-gold-gradient sm:text-[2.5rem]">
           {t("finalTitle")}
           <Heart className="ml-2 inline h-5 w-5 fill-rose text-rose" />
         </h1>
 
-        <div className="mt-8 w-full rounded-2xl border border-gold/40 bg-night/70 px-5 py-4 backdrop-blur">
+        <div className="mt-8 w-full max-w-md rounded-2xl border border-gold/40 bg-night/70 px-5 py-4 backdrop-blur">
           <p className="text-left font-display text-lg text-gold">{t("musicTitle")}</p>
-          <p className="text-left text-xs text-foreground/60">{t("musicSub")}</p>
+          <p className="text-left text-xs text-foreground/60">
+            {playing ? t("musicSub") : t("musicPaused")}
+          </p>
           <div className="mt-3 h-px w-full bg-gold/30" />
           <div className="mt-4 flex items-center justify-center gap-5 text-gold">
             <SkipBack className="h-4 w-4 opacity-60" />
             <SkipBack className="h-4 w-4" />
             <button
               type="button"
-              onClick={() => setPlaying((p) => !p)}
+              onClick={toggle}
               aria-label={t("musicTitle")}
               className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/60 bg-night/60"
             >

@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ChevronUp, Music2 } from "lucide-react";
+import { ArrowLeft, ChevronUp, Music2, Pause } from "lucide-react";
 import { useMemo, type ReactNode } from "react";
 
 import { useLang, type Lang } from "@/lib/i18n";
+import { useMusic } from "@/lib/music";
 
 export const pageOrder = [
   "/",
@@ -52,16 +53,16 @@ function TopBar() {
   const { lang, setLang, t } = useLang();
 
   return (
-    <div className="relative z-20 flex items-center justify-between px-4 pt-5">
+    <div className="relative z-20 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 pt-5 sm:px-6">
       <Link
         to="/"
-        className="flex items-center gap-1.5 rounded-full border border-gold/40 bg-night/60 px-3 py-1.5 text-[11px] tracking-wide text-foreground/90 backdrop-blur transition-colors hover:border-gold"
+        className="flex w-max min-w-0 items-center gap-1.5 rounded-full border border-gold/40 bg-night/60 px-3 py-1.5 text-[11px] tracking-wide text-foreground/90 backdrop-blur transition-colors hover:border-gold"
       >
-        <ArrowLeft className="h-3.5 w-3.5 text-gold" />
-        {t("home")}
+        <ArrowLeft className="h-3.5 w-3.5 shrink-0 text-gold" />
+        <span className="truncate">{t("home")}</span>
       </Link>
 
-      <div className="flex items-center gap-1 rounded-full border border-gold/30 bg-night/60 p-1 backdrop-blur">
+      <div className="flex shrink-0 items-center gap-1 rounded-full border border-gold/30 bg-night/60 p-1 backdrop-blur">
         {langs.map((l) => (
           <button
             key={l}
@@ -86,9 +87,10 @@ type PagePath = (typeof pageOrder)[number];
 
 function BottomBar({ nextTo }: { nextTo?: PagePath | undefined }) {
   const { t } = useLang();
+  const { playing, toggle } = useMusic();
 
   return (
-    <div className="relative z-20 flex items-end justify-between px-4 pb-6">
+    <div className="relative z-20 flex items-end justify-between px-4 pb-6 sm:px-6">
       {nextTo ? (
         <Link
           to={nextTo}
@@ -101,13 +103,17 @@ function BottomBar({ nextTo }: { nextTo?: PagePath | undefined }) {
         <span className="h-11 w-11" />
       )}
 
-      <Link
-        to="/xayr"
+      <button
+        type="button"
+        onClick={toggle}
         aria-label={t("musicTitle")}
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/50 bg-night/70 text-gold backdrop-blur transition-transform hover:-translate-y-0.5"
+        aria-pressed={playing}
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border bg-night/70 text-gold backdrop-blur transition-transform hover:-translate-y-0.5 ${
+          playing ? "border-gold shadow-[0_0_20px_-4px_var(--gold)]" : "border-gold/50"
+        }`}
       >
-        <Music2 className="h-5 w-5" />
-      </Link>
+        {playing ? <Pause className="h-5 w-5" /> : <Music2 className="h-5 w-5" />}
+      </button>
     </div>
   );
 }
@@ -124,22 +130,22 @@ export function PageFrame({
   overlay?: "strong" | "soft" | "none";
 }) {
   return (
-    <main className="relative mx-auto flex min-h-screen w-full max-w-md flex-col overflow-hidden">
+    <main className="relative mx-auto flex min-h-[100dvh] w-full max-w-md flex-col sm:max-w-xl lg:max-w-2xl">
       <div
-        className="absolute inset-0"
+        className="fixed inset-0"
         style={{ background: "var(--gradient-night)" }}
         aria-hidden="true"
       />
       {backgroundImage ? (
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="fixed inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${backgroundImage})` }}
           aria-hidden="true"
         />
       ) : null}
       {overlay !== "none" ? (
         <div
-          className="absolute inset-0"
+          className="fixed inset-0"
           aria-hidden="true"
           style={{
             background:
@@ -149,10 +155,14 @@ export function PageFrame({
           }}
         />
       ) : null}
-      <Stars />
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <Stars />
+      </div>
 
       <TopBar />
-      <div className="relative z-10 flex flex-1 flex-col px-5 py-6">{children}</div>
+      <div className="relative z-10 flex flex-1 flex-col px-5 py-6 sm:px-8 sm:py-8">
+        {children}
+      </div>
       <BottomBar nextTo={nextTo} />
     </main>
   );
