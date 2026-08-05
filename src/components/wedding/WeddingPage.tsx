@@ -156,6 +156,9 @@ function Story() {
             />
             <figcaption className="bg-night-deep/80 py-2 font-display text-lg tracking-widest text-gold">
               {i === 0 ? t("groom") : t("bride")}
+              <span className="mt-0.5 block font-sans text-[0.65rem] font-normal tracking-[0.15em] text-gold/70">
+                {i === 0 ? t("groomFamily") : t("brideFamily")}
+              </span>
             </figcaption>
           </figure>
         ))}
