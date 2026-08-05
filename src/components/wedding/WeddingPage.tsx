@@ -28,7 +28,7 @@ import { Section } from "./Section";
 import { StarField } from "./StarField";
 
 const WEDDING_DATE = new Date("2027-07-27T18:00:00+05:00");
-const MAP_URL = "https://maps.google.com/?q=Marg'ilon+restorani+Farg'ona";
+const MAP_URL = "https://yandex.uz/maps/-/CTC~iM8H";
 
 function TopBar() {
   const { lang, setLang } = useI18n();
