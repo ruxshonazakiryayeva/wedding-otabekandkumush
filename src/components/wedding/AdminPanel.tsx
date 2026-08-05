@@ -12,18 +12,23 @@ export function AdminPanel() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [rows, setRows] = useState<RsvpRow[] | null>(null);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setFailed(false);
+    setErrorMessage(null);
     try {
       const result = await load({ data: { password } });
       if (result.ok) setRows(result.rows);
       else setFailed(true);
-    } catch {
+    } catch (err) {
+      // Surface the real error (e.g. Supabase/server misconfiguration) instead of
+      // silently reporting it as a wrong password.
       setFailed(true);
+      setErrorMessage(err instanceof Error ? err.message : String(err));
     }
     setLoading(false);
   };
@@ -33,6 +38,7 @@ export function AdminPanel() {
     setPassword("");
     setRows(null);
     setFailed(false);
+    setErrorMessage(null);
   };
 
   const attending = rows?.filter((r) => r.attending) ?? [];
@@ -104,7 +110,11 @@ export function AdminPanel() {
                   className="w-full rounded-xl border border-gold/40 bg-night-deep px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold/40"
                   placeholder="••••"
                 />
-                {failed ? <p className="text-sm text-rose">{t("wrongPassword")}</p> : null}
+                {failed ? (
+                  <p className="text-sm text-rose">
+                    {errorMessage ? `${t("wrongPassword")}: ${errorMessage}` : t("wrongPassword")}
+                  </p>
+                ) : null}
                 <button
                   type="submit"
                   disabled={loading || !password}
