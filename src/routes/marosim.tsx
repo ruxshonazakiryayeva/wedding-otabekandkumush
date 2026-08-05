@@ -8,7 +8,7 @@ import { useLang } from "@/lib/i18n";
 export const Route = createFileRoute("/marosim")({
   head: () => ({
     meta: [
-      { title: "To'y marosimi · 27.07.2027 Navro'z Saroyi" },
+      { title: "To'y marosimi · 27.07.2027 Marg’ilon" },
       {
         name: "description",
         content: "To'y marosimi: 27.07.2027, seshanba, 18:00, Marg’ilon Restorani (To’yxona), Farg'ona shahri.",
