@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ChevronDown, User, Users } from "lucide-react";
+import { Check, ChevronDown, User, Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { PageFrame } from "@/components/wedding/PageFrame";
 import { Divider } from "@/components/wedding/Ornament";
+import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/tasdiqlash")({
@@ -31,14 +32,55 @@ function TasdiqlashPage() {
   const [attend, setAttend] = useState("yes");
   const [count, setCount] = useState("");
   const [note, setNote] = useState("");
+  const [sending, setSending] = useState(false);
+  const [done, setDone] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success(t("thanks"));
+    if (sending) return;
+    setSending(true);
+    const { error } = await supabase.from("rsvps").insert({
+      name: name.trim(),
+      attending: attend === "yes",
+      guests: count ? Math.max(1, Number(count)) : 1,
+      note: note.trim() || null,
+    });
+    setSending(false);
+    if (error) {
+      toast.error("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
+      return;
+    }
     setName("");
     setCount("");
     setNote("");
+    setAttend("yes");
+    setDone(true);
   };
+
+  if (done) {
+    return (
+      <PageFrame nextTo="/xayr">
+        <div className="flex flex-1 items-center justify-center animate-rise">
+          <div className="paper-card w-full rounded-[2rem] px-6 py-10 text-center">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-night text-gold">
+              <Check className="h-7 w-7" />
+            </span>
+            <h1 className="mt-5 font-display text-2xl tracking-[0.12em] text-ink">
+              {t("thanks")}
+            </h1>
+            <Divider className="mt-4 text-ink" />
+            <button
+              type="button"
+              onClick={() => setDone(false)}
+              className="mt-6 rounded-xl border border-gold-deep/50 px-5 py-2 text-sm text-ink-soft"
+            >
+              {t("send")}
+            </button>
+          </div>
+        </div>
+      </PageFrame>
+    );
+  }
 
   return (
     <PageFrame nextTo="/xayr">
@@ -96,7 +138,8 @@ function TasdiqlashPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-night py-3 text-sm tracking-wide text-gold transition-colors hover:bg-night-deep"
+              disabled={sending}
+              className="w-full rounded-xl bg-night py-3 text-sm tracking-wide text-gold transition-colors hover:bg-night-deep disabled:opacity-60"
             >
               {t("send")}
             </button>
