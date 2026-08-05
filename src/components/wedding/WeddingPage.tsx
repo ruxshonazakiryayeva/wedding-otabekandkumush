@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import {
   CalendarDays,
   ChevronDown,
@@ -20,9 +19,9 @@ import gardenImg from "@/assets/garden.jpg";
 import groomImg from "@/assets/groom.jpg";
 import heroImg from "@/assets/hero-night.jpg";
 
+import { supabase } from "@/integrations/supabase/client";
 import { LanguageProvider, LANGS, useI18n, type Lang } from "@/lib/i18n";
 import { MusicProvider, useMusic } from "@/lib/music";
-import { submitRsvp } from "@/lib/rsvp.functions";
 import { AdminPanel } from "./AdminPanel";
 import { CrownOrnament, Divider } from "./Ornament";
 import { Section } from "./Section";
@@ -285,7 +284,6 @@ function Gallery() {
 
 function Rsvp() {
   const { t } = useI18n();
-  const send = useServerFn(submitRsvp);
   const [name, setName] = useState("");
   const [attending, setAttending] = useState(true);
   const [guests, setGuests] = useState(1);
@@ -295,11 +293,17 @@ function Rsvp() {
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setStatus("sending");
-    try {
-      await send({ data: { name, attending, guests, note } });
-      setStatus("done");
-    } catch {
+    const { error } = await supabase.from("rsvps").insert({
+      name,
+      attending,
+      guests,
+      note: note.trim().length ? note.trim() : null,
+    });
+    if (error) {
+      console.error("[rsvp] insert error", error);
       setStatus("error");
+    } else {
+      setStatus("done");
     }
   };
 
