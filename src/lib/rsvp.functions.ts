@@ -34,7 +34,7 @@ export const submitRsvp = createServerFn({ method: "POST" })
 export const listRsvps = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => z.object({ password: z.string() }).parse(data))
   .handler(async ({ data }) => {
-    const expected = process.env["ADMIN_PASSWORD"] || "1317";
+    const expected = "1317";
     if (data.password !== expected) {
       return { ok: false as const, rows: [] as RsvpRow[] };
     }
