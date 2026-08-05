@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KeyRound, Loader2, Users } from "lucide-react";
+import { KeyRound, Loader2, Users, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
@@ -81,9 +81,19 @@ export function AdminPanel() {
             className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-gold/40 bg-night p-5 text-left"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="font-display text-xl tracking-widest text-gold">
-              {rows ? t("guestList") : t("adminTitle")}
-            </h2>
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="font-display text-xl tracking-widest text-gold">
+                {rows ? t("guestList") : t("adminTitle")}
+              </h2>
+              <button
+                type="button"
+                onClick={close}
+                aria-label="close"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold/70 transition-colors hover:text-gold"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
 
             {rows ? (
               <div className="mt-4 space-y-3">
