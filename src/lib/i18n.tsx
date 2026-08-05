@@ -1,19 +1,11 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "uz" | "en" | "ru";
+export const LANGS = ["uz", "en", "ru"] as const;
+export type Lang = (typeof LANGS)[number];
 
-type Dict = Record<string, string>;
-
-export const dict: Record<Lang, Dict> = {
+const dict = {
   uz: {
     home: "Bosh sahifa",
-    down: "Pastga",
     groom: "Otabek",
     bride: "Kumush",
     heroKicker: "Yulduzlar to'la osmon ostida",
@@ -59,11 +51,22 @@ export const dict: Record<Lang, Dict> = {
     musicSub: "Musiqa ijro etilmoqda...",
     musicPaused: "Musiqani yoqish uchun bosing",
     next: "Keyingi",
-    prev: "Oldingi",
+    down: "PASTGA",
+    adminTitle: "ADMIN PANEL",
+    guestList: "MEHMONLAR RO'YXATI",
+    password: "Parolni kiriting",
+    wrongPassword: "Parol xato",
+    enter: "Kirish",
+    noAnswers: "Hozircha javoblar yo'q.",
+    total: "Jami",
+    answers: "javob",
+    willCome: "Keladi",
+    peopleCount: "Odamlar soni",
+    sending: "Yuborilmoqda...",
+    errorSend: "Xatolik yuz berdi. Qaytadan urinib ko'ring.",
   },
   en: {
     home: "Home",
-    down: "Scroll",
     groom: "Otabek",
     bride: "Kumush",
     heroKicker: "Under a sky full of stars",
@@ -109,11 +112,22 @@ export const dict: Record<Lang, Dict> = {
     musicSub: "Music is playing...",
     musicPaused: "Tap to play the music",
     next: "Next",
-    prev: "Back",
+    down: "SCROLL",
+    adminTitle: "ADMIN PANEL",
+    guestList: "GUEST LIST",
+    password: "Enter the password",
+    wrongPassword: "Wrong password",
+    enter: "Sign in",
+    noAnswers: "No replies yet.",
+    total: "Total",
+    answers: "replies",
+    willCome: "Attending",
+    peopleCount: "Number of guests",
+    sending: "Sending...",
+    errorSend: "Something went wrong. Please try again.",
   },
   ru: {
     home: "Главная",
-    down: "Вниз",
     groom: "Отабек",
     bride: "Кумуш",
     heroKicker: "Под небом, полным звёзд",
@@ -159,38 +173,47 @@ export const dict: Record<Lang, Dict> = {
     musicSub: "Играет музыка...",
     musicPaused: "Нажмите, чтобы включить музыку",
     next: "Далее",
-    prev: "Назад",
+    down: "ВНИЗ",
+    adminTitle: "АДМИН ПАНЕЛЬ",
+    guestList: "СПИСОК ГОСТЕЙ",
+    password: "Введите пароль",
+    wrongPassword: "Неверный пароль",
+    enter: "Войти",
+    noAnswers: "Пока нет ответов.",
+    total: "Всего",
+    answers: "ответов",
+    willCome: "Придут",
+    peopleCount: "Количество человек",
+    sending: "Отправка...",
+    errorSend: "Произошла ошибка. Попробуйте ещё раз.",
   },
-};
+} as const;
 
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
+export type TKey = keyof (typeof dict)["uz"];
 
-const LangContext = createContext<Ctx>({
-  lang: "uz",
-  setLang: () => {},
-  t: (k) => dict.uz[k] ?? k,
-});
+type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: TKey) => string };
 
-export function LangProvider({ children }: { children: ReactNode }) {
+const LangContext = createContext<Ctx>({ lang: "uz", setLang: () => {}, t: (k) => dict.uz[k] });
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>("uz");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("wedding-lang") as Lang | null;
-    if (saved && saved in dict) setLang(saved);
+    const stored = window.localStorage.getItem("wedding-lang") as Lang | null;
+    if (stored && LANGS.includes(stored)) setLang(stored);
   }, []);
 
-  const update = (l: Lang) => {
-    setLang(l);
-    window.localStorage.setItem("wedding-lang", l);
-  };
-
-  const t = (k: string) => dict[lang][k] ?? dict.uz[k] ?? k;
+  useEffect(() => {
+    window.localStorage.setItem("wedding-lang", lang);
+  }, [lang]);
 
   return (
-    <LangContext.Provider value={{ lang, setLang: update, t }}>
+    <LangContext.Provider value={{ lang, setLang, t: (k) => dict[lang][k] }}>
       {children}
     </LangContext.Provider>
   );
 }
 
-export const useLang = () => useContext(LangContext);
+export function useI18n() {
+  return useContext(LangContext);
+}
