@@ -1,13 +1,22 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { KeyRound, Loader2, Users } from "lucide-react";
 
-import { listRsvps, type RsvpRow } from "@/lib/rsvp.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
+
+type RsvpRow = {
+  id: string;
+  name: string;
+  attending: boolean;
+  guests: number;
+  note: string | null;
+  created_at: string;
+};
+
+const ADMIN_PASSWORD = "1317";
 
 export function AdminPanel() {
   const { t } = useI18n();
-  const load = useServerFn(listRsvps);
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,15 +29,23 @@ export function AdminPanel() {
     setLoading(true);
     setFailed(false);
     setErrorMessage(null);
-    try {
-      const result = await load({ data: { password } });
-      if (result.ok) setRows(result.rows);
-      else setFailed(true);
-    } catch (err) {
-      // Surface the real error (e.g. Supabase/server misconfiguration) instead of
-      // silently reporting it as a wrong password.
+
+    if (password !== ADMIN_PASSWORD) {
       setFailed(true);
-      setErrorMessage(err instanceof Error ? err.message : String(err));
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("rsvps")
+      .select("id, name, attending, guests, note, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      setFailed(true);
+      setErrorMessage(error.message);
+    } else {
+      setRows((data ?? []) as RsvpRow[]);
     }
     setLoading(false);
   };
