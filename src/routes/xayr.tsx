@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Instagram, Pause, Phone, Play, Send, SkipBack, SkipForward } from "lucide-react";
 
 import { PageFrame } from "@/components/wedding/PageFrame";
+import { AdminPanel } from "@/components/wedding/AdminPanel";
 import { useLang } from "@/lib/i18n";
 import { useMusic } from "@/lib/music";
 import finale from "@/assets/finale.jpg";
@@ -70,12 +71,15 @@ function XayrPage() {
           ))}
         </div>
 
-        <div className="mt-8 mb-2 text-center">
+        <div className="mt-8 mb-2 flex flex-col items-center text-center">
           <p className="text-xs text-gold/70">♥</p>
           <p className="font-display text-xl text-foreground/90">
             {t("groom")} &amp; {t("bride")}
           </p>
           <p className="mt-1 text-sm tracking-widest text-foreground/60">27.07.2027</p>
+          <div className="mt-4">
+            <AdminPanel />
+          </div>
         </div>
       </div>
     </PageFrame>
